@@ -1,0 +1,96 @@
+buildscript {
+    repositories {
+		gradlePluginPortal()
+        mavenCentral()
+        jcenter()
+		maven {
+			name = "Forge"
+			url = 'https://files.minecraftforge.net/maven'
+		}
+		maven {
+            name = 'spongepowered-repo'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+        maven {
+            name = "github"
+            url = "https://github.com/juanmuscaria/maven/raw/master"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+plugins {
+	id "org.jetbrains.kotlin.jvm" version "1.4.32"
+	id "org.jetbrains.kotlin.plugin.serialization" version "1.4.32"
+}
+
+apply plugin: 'eclipse'
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
+
+version = mod_version
+group = mod_group
+archivesBaseName = mod_archives_name
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+sourceSets {
+	main {
+		ext.refMap = mixinRefmapName
+	}
+}
+
+minecraft {
+	mappings channel: "snapshot", version: "20180808-1.12"
+}
+
+dependencies {
+	minecraft "net.minecraftforge:forge:1.12.2-14.23.5.2855"
+
+	implementation 'org.litote.kmongo:kmongo-coroutine:4.2.8'
+	// Kotlin
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32"
+	//Sponge
+	implementation "org.spongepowered:spongecommon:1.12.2-7.3.0:dev"
+	// Mixin
+	implementation "org.spongepowered:mixin:0.8"
+	annotationProcessor "org.spongepowered:mixin:0.8:processor"
+	// FTB
+	implementation fg.deobf("com.feed_the_beast.mods:FTBLib:5.4.7.2")
+	implementation fg.deobf("com.feed_the_beast.mods:FTBQuests:1202.9.0.15")
+	//Grimoire
+	implementation files("deps/Grimoire-mc1.12.2-3.2.8.jar")
+	//ReCore and more
+	implementation files(
+			"../ReCore/ReCore/build/libs/ReCore-1.0.0.jar",
+			"../ReCore/ReIsland/build/libs/ReIsland-1.0.0.jar",
+			"../ReCore/ReUtils/build/libs/ReUtils-1.0.0.jar"
+	)
+	//BloodMagic
+	implementation fg.deobf("curse.maven:bloodmagic-224791:2822288")
+	//Botania
+	implementation fg.deobf("curse.maven:botania-225643:3330934")
+	//Mekanism
+	implementation fg.deobf("curse.maven:mekanism-268560:2835175")
+	//Avaritia
+	implementation fg.deobf("curse.maven:avaritia-261348:3143349")
+}
+
+repositories {
+	maven { url = "https://repo.spongepowered.org/maven" }
+	maven { url = "https://nexus.velocitypowered.com/repository/maven-public/" }
+	maven { url = "https://jitpack.io" }
+	maven { url = "https://maven.latmod.com/" }
+	maven { url = "https://www.cursemaven.com" }
+	maven { url = "https://repo.maven.apache.org/maven2" }
+	maven { url = "https://dvs1.progwml6.com/files/maven" }
+}
+
+compileKotlin {
+	kotlinOptions {
+		jvmTarget = "1.8"
+	}
+}
