@@ -30,9 +30,7 @@ apply plugin: 'eclipse'
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
-version = mod_version
-group = mod_group
-archivesBaseName = mod_archives_name
+archivesBaseName = mod_archives_name + "-" + mod_version
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
@@ -53,6 +51,8 @@ dependencies {
 	implementation 'org.litote.kmongo:kmongo-coroutine:4.2.8'
 	// Kotlin
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32"
+	//Redis client
+	implementation "org.redisson:redisson:3.16.0"
 	//Sponge
 	implementation "org.spongepowered:spongecommon:1.12.2-7.3.0:dev"
 	// Mixin
