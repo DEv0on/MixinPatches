@@ -64,11 +64,8 @@ dependencies {
 	//Grimoire
 	implementation files("deps/Grimoire-mc1.12.2-3.2.8.jar")
 	//ReCore and more
-	implementation files(
-			"../ReCore/ReCore/build/libs/ReCore-1.0.0.jar",
-			"../ReCore/ReIsland/build/libs/ReIsland-1.0.0.jar",
-			"../ReCore/ReUtils/build/libs/ReUtils-1.0.0.jar"
-	)
+	implementation "net.remodded:recore:1.0.0"
+	implementation "net.remodded:reisland:1.0.0"
 	//BloodMagic
 	implementation fg.deobf("curse.maven:bloodmagic-224791:2822288")
 	//Botania
@@ -87,6 +84,15 @@ repositories {
 	maven { url = "https://www.cursemaven.com" }
 	maven { url = "https://repo.maven.apache.org/maven2" }
 	maven { url = "https://dvs1.progwml6.com/files/maven" }
+	repositories {
+		maven {
+			url "https://maven.pkg.jetbrains.space/remodded/p/recore/recore"
+			credentials {
+				username = spaceUsername
+				password = spacePassword
+			}
+		}
+	}
 }
 
 compileKotlin {
