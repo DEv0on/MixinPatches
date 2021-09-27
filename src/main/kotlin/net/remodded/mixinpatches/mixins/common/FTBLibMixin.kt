@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Overwrite
 
 @Mixin(FTBLib::class)
 class FTBLibMixin {
-    @Overwrite
-    @Mod.EventHandler
-    fun onServerStarting(event: FMLServerStartingEvent) {}
+//    @Overwrite
+//    @Mod.EventHandler
+//    fun onServerStarting(event: FMLServerStartingEvent) {}
 }

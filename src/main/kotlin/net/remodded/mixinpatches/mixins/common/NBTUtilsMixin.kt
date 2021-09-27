@@ -10,8 +10,6 @@ import net.minecraft.nbt.NBTTagCompound
 import net.remodded.mixinpatches.database.FTBCollection
 import net.remodded.mixinpatches.database.Mongo
 import net.remodded.mixinpatches.util.MongoData
-import net.remodded.recore.ReCore
-import net.remodded.recore.database.Redis
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.Overwrite
 import java.io.File
@@ -20,9 +18,6 @@ import java.io.File
 @Overwrite
 fun writeNBT(file: File, nbt: NBTTagCompound) {
     GlobalScope.launch(Dispatchers.IO) {
-        val loadedIslands = Redis.client.getMap<String, String>("LoadedIslands")
-        val currentNode = ReCore.config.nodeName
-        if (!loadedIslands.containsKey(currentNode)) return@launch
         Mongo.logger.debug("Saving $file")
         val data = FTBCollection(
             file.path,
