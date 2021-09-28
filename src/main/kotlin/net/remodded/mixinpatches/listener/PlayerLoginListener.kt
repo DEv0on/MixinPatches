@@ -7,13 +7,13 @@ import com.feed_the_beast.ftblib.lib.data.ForgeTeam
 import com.feed_the_beast.ftblib.lib.data.TeamType
 import com.feed_the_beast.ftblib.lib.data.Universe
 import com.feed_the_beast.ftblib.lib.util.StringUtils
+import com.feed_the_beast.ftblib.net.MessageSyncData
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.nbt.NBTTagCompound
+import net.remodded.mixinpatches.Core
 import net.remodded.mixinpatches.database.FTBCollection
 import net.remodded.mixinpatches.database.Mongo
 import net.remodded.mixinpatches.util.UniverseUtils
@@ -34,7 +34,6 @@ object PlayerLoginListener {
         var teamNbt: NBTTagCompound? = null
         var isTeamAlreadyLoaded = false
         GlobalScope.launch(sync) {
-
 
             val playerDir = File(u.worldDirectory, "data/ftb_lib/players/")
             playerData = Mongo.ftbCollection.findOneById("$playerDir/${gameProfile.uniqueId}.dat")
@@ -106,6 +105,7 @@ object PlayerLoginListener {
 
                                 if (player.team.title.unformattedText == "No Team") {
                                     event.isCancelled = true
+                                    Core.logger.error("TEAM ${playerNbt.getString("TeamID")} JEST ZJEBANY!")
                                     u.removeTeam(player.team)
                                     player.team = u.getTeam("")
                                 }
@@ -118,6 +118,13 @@ object PlayerLoginListener {
                 }
             }
         }
+    }
+
+    @Listener
+    fun onPlayerConnect(event: ClientConnectionEvent.Join) {
+        val player = event.targetEntity as EntityPlayerMP
+        val forgePlayer = Universe.get().getPlayer(player.gameProfile)
+        MessageSyncData(true, player, forgePlayer).sendTo(player)
     }
 
     @Listener

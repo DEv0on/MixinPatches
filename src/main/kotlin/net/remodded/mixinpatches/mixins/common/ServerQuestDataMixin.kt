@@ -4,7 +4,6 @@ package net.remodded.mixinpatches.mixins.common
 
 import com.feed_the_beast.ftblib.events.team.ForgeTeamLoadedEvent
 import com.feed_the_beast.ftblib.lib.data.ForgeTeam
-import com.feed_the_beast.ftbquests.quest.ChangeProgress
 import com.feed_the_beast.ftbquests.quest.ServerQuestFile
 import com.feed_the_beast.ftbquests.util.ServerQuestData
 import com.google.gson.Gson
