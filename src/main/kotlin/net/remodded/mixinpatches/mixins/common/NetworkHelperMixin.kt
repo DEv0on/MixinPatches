@@ -12,8 +12,9 @@ import java.util.*
 
 @Overwrite
 fun getSoulNetwork(uuid: String): SoulNetwork {
-    val player = FMLServerHandler.instance().server.playerList.getPlayerByUUID(UUID.fromString(uuid))
-    if (player == null) throw IllegalArgumentException("Player is not online")
+    val uuidO = UUID.fromString(uuid)
+    val player = FMLServerHandler.instance().server.playerList.getPlayerByUUID(uuidO)
+    if (player == null) return SoulNetwork.newEmpty(uuidO)
 
     val storage = player.world.perWorldStorage
     var instance: BMWorldSavedData? = storage.getOrLoadData(BMWorldSavedData::class.java, BMWorldSavedData.ID) as BMWorldSavedData?
@@ -23,5 +24,5 @@ fun getSoulNetwork(uuid: String): SoulNetwork {
         storage.setData(BMWorldSavedData.ID, instance)
     }
 
-    return instance.getNetwork(UUID.fromString(uuid))
+    return instance.getNetwork(uuidO)
 }
