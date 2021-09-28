@@ -28,6 +28,10 @@ object UniverseUtils {
     }
 
     fun saveTeam(team: ForgeTeam) {
+        if (team.title.unformattedText == "No Team") {
+            Universe.get().removeTeam(team)
+            return
+        }
         val file = team.getDataFile("")
         if (team.type.save && team.isValid) {
             val nbt = team.serializeNBT()

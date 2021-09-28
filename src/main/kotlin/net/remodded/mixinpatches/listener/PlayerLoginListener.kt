@@ -12,6 +12,8 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import kotlinx.coroutines.*
 import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.init.Items
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.remodded.mixinpatches.Core
 import net.remodded.mixinpatches.database.FTBCollection
@@ -33,8 +35,8 @@ object PlayerLoginListener {
         var playerNbt: NBTTagCompound
         var teamNbt: NBTTagCompound? = null
         var isTeamAlreadyLoaded = false
+        var isPlayerAlreadyLoaded = false
         GlobalScope.launch(sync) {
-
             val playerDir = File(u.worldDirectory, "data/ftb_lib/players/")
             playerData = Mongo.ftbCollection.findOneById("$playerDir/${gameProfile.uniqueId}.dat")
             if (playerData != null) {
@@ -47,18 +49,17 @@ object PlayerLoginListener {
                     ) as NBTTagCompound
                 val uuidStr = playerNbt.getString("UUID")
                 val uuid = StringUtils.fromString(uuidStr)
-
-                if (uuid != null) {
+                if (u.getPlayer(uuid) != null)
+                    isPlayerAlreadyLoaded = true
+                if (uuid != null && !isPlayerAlreadyLoaded) {
                     val forgePlayer = ForgePlayer(u, uuid, playerNbt.getString("Name"))
                     u.players[uuid] = forgePlayer
                 }
 
                 if (playerNbt.hasKey("TeamID")) {
                     val teamID = playerNbt.getString("TeamID")
-                    if (u.getTeam(teamID).id != "") {
+                    if (u.getTeam(teamID).id != "")
                         isTeamAlreadyLoaded = true
-                        u.players[uuid]?.team = u.getTeam(teamID)
-                    }
                     if (!isTeamAlreadyLoaded) {
                         val teamData: FTBCollection?
                         val teamDir = File(u.worldDirectory, "data/ftb_lib/teams/")
@@ -92,12 +93,14 @@ object PlayerLoginListener {
                 val player = u.players[gameProfile.uniqueId]
 
                 if (player != null) {
-                    if (playerNbt != null && !playerNbt.isEmpty) {
-                        player.team = u.getTeam(playerNbt.getString("TeamID"))
-                        player.deserializeNBT(playerNbt)
+                    if (!isPlayerAlreadyLoaded) {
+                        if (playerNbt != null && !playerNbt.isEmpty) {
+                            player.team = u.getTeam(playerNbt.getString("TeamID"))
+                            player.deserializeNBT(playerNbt)
+                        }
+                        ForgePlayerLoadedEvent(player).post()
+                        Mongo.logger.warn("Loaded player ${gameProfile.uniqueId}")
                     }
-                    ForgePlayerLoadedEvent(player).post()
-                    Mongo.logger.warn("Loaded player ${gameProfile.uniqueId}")
                     if (!isTeamAlreadyLoaded) {
                         if (player.team.type.save) {
                             if (teamNbt != null && !teamNbt!!.isEmpty) {
@@ -136,8 +139,5 @@ object PlayerLoginListener {
 
         UniverseUtils.savePlayer(forgePlayer)
         UniverseUtils.saveTeam(forgeTeam)
-
-        u.players.remove(gameProfile.uniqueId)
-        Mongo.logger.warn("Unloaded player ${gameProfile.name.get()}")
     }
 }

@@ -1,7 +1,9 @@
 package net.remodded.mixinpatches.listener
 
 import com.feed_the_beast.ftblib.events.team.*
+import com.feed_the_beast.ftblib.lib.data.Universe
 import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.remodded.mixinpatches.Core
 import net.remodded.mixinpatches.util.UniverseUtils
@@ -40,8 +42,13 @@ class FTBTeamListener {
         }
 
         @JvmStatic
-        @SubscribeEvent
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onForgeTeamSave(event: ForgeTeamSavedEvent) {
+            if (event.team.title.unformattedText == "No Team") {
+                Universe.get().removeTeam(event.team)
+                event.isCanceled = true
+                return
+            }
             val storage = Redis.client.getListMultimap<String, String>("FTBSync")
             storage.removeAll(event.team.id)
         }
