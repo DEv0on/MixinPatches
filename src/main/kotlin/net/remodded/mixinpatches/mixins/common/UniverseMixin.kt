@@ -49,7 +49,7 @@ class UniverseMixin {
         if (universeData == null)
             universeData = NBTTagCompound()
 
-        val u = Universe.get()
+        val universe = Universe.get()
 
         uuid = StringUtils.fromString(universeData.getString("UUID"))
 
@@ -57,27 +57,27 @@ class UniverseMixin {
             uuid = null
 
         val data = universeData.getCompoundTag("Data")
-        UniverseLoadedEvent.Pre(u, data).post()
+        UniverseLoadedEvent.Pre(universe, data).post()
 
-        u.fakePlayerTeam = UniverseUtils.getFakeTeam(u, 1.toShort(), "fakeplayer", TeamType.SERVER_NO_SAVE)
+        universe.fakePlayerTeam = UniverseUtils.getFakeTeam(universe, 1.toShort(), "fakeplayer", TeamType.SERVER_NO_SAVE)
 
-        u.fakePlayer = FakeForgePlayer(u)
-        u.fakePlayer.team = u.fakePlayerTeam
-        u.fakePlayerTeam.color = EnumTeamColor.GRAY
+        universe.fakePlayer = FakeForgePlayer(universe)
+        universe.fakePlayer.team = universe.fakePlayerTeam
+        universe.fakePlayerTeam.color = EnumTeamColor.GRAY
 
-        UniverseLoadedEvent.CreateServerTeams(u).post()
+        UniverseLoadedEvent.CreateServerTeams(universe).post()
 
         if (universeData.hasKey("FakePlayer"))
-            u.fakePlayer.deserializeNBT(universeData.getCompoundTag("FakePlayer"))
+            universe.fakePlayer.deserializeNBT(universeData.getCompoundTag("FakePlayer"))
 
         if (universeData.hasKey("FakeTeam"))
-            u.fakePlayerTeam.deserializeNBT(universeData.getCompoundTag("FakeTeam"))
+            universe.fakePlayerTeam.deserializeNBT(universeData.getCompoundTag("FakeTeam"))
 
-        u.fakePlayerTeam.owner = u.fakePlayer
+        universe.fakePlayerTeam.owner = universe.fakePlayer
 
-        UniverseLoadedEvent.Post(u, universeData.getCompoundTag("Data")).post()
-        UniverseLoadedEvent.Finished(u).post()
+        UniverseLoadedEvent.Post(universe, universeData.getCompoundTag("Data")).post()
+        UniverseLoadedEvent.Finished(universe).post()
 
-        FTBLibAPI.reloadServer(u, u.server, EnumReloadType.CREATED, ServerReloadEvent.ALL)
+        FTBLibAPI.reloadServer(universe, universe.server, EnumReloadType.CREATED, ServerReloadEvent.ALL)
     }
 }

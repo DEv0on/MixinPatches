@@ -31,7 +31,7 @@ class TaskDataMixin {
         val pubNBT = NBTTagCompound()
         pubNBT.setString("TeamID", teamID)
         pubNBT.setTag("Data", nbt)
-        Redis.client.getTopic("FTBSync").publish(NbtSerializer.serialize(pubNBT).toString())
+        SyncUtils.handleUpdate(pubNBT)
     }
 }
 
@@ -51,7 +51,7 @@ class ChapterMixin {
         val pubNBT = NBTTagCompound()
         pubNBT.setString("TeamID", teamID)
         pubNBT.setTag("Data", nbt)
-        Redis.client.getTopic("FTBSync").publish(NbtSerializer.serialize(pubNBT).toString())
+        SyncUtils.handleUpdate(pubNBT)
     }
 }
 
@@ -71,7 +71,7 @@ class QuestMixin {
         val pubNBT = NBTTagCompound()
         pubNBT.setString("TeamID", teamID)
         pubNBT.setTag("Data", nbt)
-        Redis.client.getTopic("FTBSync").publish(NbtSerializer.serialize(pubNBT).toString())
+        SyncUtils.handleUpdate(pubNBT)
     }
 }
 
@@ -91,6 +91,6 @@ class TaskMixin {
         val pubNBT = NBTTagCompound()
         pubNBT.setString("TeamID", teamID)
         pubNBT.setTag("Data", nbt)
-        Redis.client.getTopic("FTBSync").publish(NbtSerializer.serialize(pubNBT).toString())
+        SyncUtils.handleUpdate(pubNBT)
     }
 }
