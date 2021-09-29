@@ -18,7 +18,7 @@ object SyncUtils {
         Redis.client.getTopic("FTBSync").addListener(String::class.java, SyncListener)
     }
 
-    private val updateSet = HashSet<String>()
+    private val updateSet = HashSet<UpdateDetails>()
 
     object SyncListener : MessageListener<String> {
         override fun onMessage(channel: CharSequence, msg: String) {
@@ -30,13 +30,14 @@ object SyncUtils {
             val questData = ServerQuestData.get(team)
             val updateType = UpdateType.valueOf(nbt.getString("UpdateType"))
 
+            val updateDetails = UpdateDetails(nbt)
             // if updateSet already contains this message it mean that it came from this server, so we don't need to update anything
-            if (updateSet.contains(msg)) {
-                updateSet.remove(msg)
+            if (updateSet.contains(updateDetails)) {
+                updateSet.remove(updateDetails)
                 return
             }
             // adding message to updateSet at this point indicate that it came from other node, and should be processed but not propagated
-            updateSet.add(msg)
+            updateSet.add(updateDetails)
             loadData(updateType, nbt, questData)
         }
     }
@@ -77,17 +78,18 @@ object SyncUtils {
 
     fun handleUpdate(nbt: NBTTagCompound) {
         val message = NbtSerializer.serialize(nbt).toString()
+        val updateDetails = UpdateDetails(nbt)
 
         // if updateSet contains message at this moment it means that it came from other node and shouldn't be propagated.
         // and we can safely delete this message
-        if (updateSet.contains(message)) {
-            updateSet.remove(message)
+        if (updateSet.contains(updateDetails)) {
+            updateSet.remove(updateDetails)
             return
         }
 
         // if update set doesn't contain message it means that it is change from this server and should be propagated
         // also setting message in updateSet at this point can help detect update from this server in message listener
-        updateSet.add(message)
+        updateSet.add(updateDetails)
         Redis.client.getTopic("FTBSync").publish(message)
     }
 
