@@ -4,10 +4,10 @@ import net.minecraft.nbt.NBTTagCompound
 
 data class UpdateDetails(
     val teamId: String,
-    val updateType: SyncUtils.UpdateType
+    val updateType: String
 ) {
     constructor(nbt: NBTTagCompound) : this(
         nbt.getString("TeamID"),
-        SyncUtils.UpdateType.valueOf(nbt.getString("UpdateType"))
+        nbt.getString("UpdateType")
     )
 }
