@@ -43,17 +43,18 @@ sourceSets {
 
 minecraft {
 	mappings channel: "snapshot", version: "20180808-1.12"
+	accessTransformer = file("src/main/resources/META-INF/mixinpatches-at.cfg")
 }
 
 dependencies {
 	minecraft "net.minecraftforge:forge:1.12.2-14.23.5.2855"
-
-	implementation 'org.litote.kmongo:kmongo-coroutine:4.2.8'
 	// Kotlin
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32"
-	//Redis client
+	// MongoDB
+	implementation 'org.litote.kmongo:kmongo-coroutine:4.2.8'
+	// Redis client
 	implementation "org.redisson:redisson:3.16.0"
-	//Sponge
+	// Sponge
 	implementation "org.spongepowered:spongecommon:1.12.2-7.3.0:dev"
 	// Mixin
 	implementation "org.spongepowered:mixin:0.8"
@@ -61,18 +62,19 @@ dependencies {
 	// FTB
 	implementation fg.deobf("com.feed_the_beast.mods:FTBLib:5.4.7.2")
 	implementation fg.deobf("com.feed_the_beast.mods:FTBQuests:1202.9.0.15")
-	//Grimoire
+	// Grimoire
 	implementation files("deps/Grimoire-mc1.12.2-3.2.8.jar")
 	//ReCore and more
-	implementation "net.remodded:recore:1.0.0"
-	implementation "net.remodded:reisland:1.0.0"
-	//BloodMagic
+//	implementation "net.remodded:recore:1.0.0"
+//	implementation "net.remodded:reisland:1.0.0"
+	implementation files("deps/ReIsland-1.0.0.jar", "deps/ReCore-1.0.0.jar")
+	// BloodMagic
 	implementation fg.deobf("curse.maven:bloodmagic-224791:2822288")
-	//Botania
+	// Botania
 	implementation fg.deobf("curse.maven:botania-225643:3330934")
-	//Mekanism
+	// Mekanism
 	implementation fg.deobf("curse.maven:mekanism-268560:2835175")
-	//Avaritia
+	// Avaritia
 	implementation fg.deobf("curse.maven:avaritia-261348:3143349")
 }
 
@@ -80,19 +82,18 @@ repositories {
 	maven { url = "https://repo.spongepowered.org/maven" }
 	maven { url = "https://nexus.velocitypowered.com/repository/maven-public/" }
 	maven { url = "https://jitpack.io" }
-	maven { url = "https://maven.latmod.com/" }
 	maven { url = "https://www.cursemaven.com" }
 	maven { url = "https://repo.maven.apache.org/maven2" }
 	maven { url = "https://dvs1.progwml6.com/files/maven" }
-	repositories {
-		maven {
-			url "https://maven.pkg.jetbrains.space/remodded/p/recore/recore"
-			credentials {
-				username = spaceUsername
-				password = spacePassword
-			}
-		}
-	}
+//	repositories {
+//		maven {
+//			url "https://maven.pkg.jetbrains.space/remodded/p/recore/recore"
+//			credentials {
+//				username = spaceUsername
+//				password = spacePassword
+//			}
+//		}
+//	}
 }
 
 compileKotlin {
