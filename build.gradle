@@ -43,7 +43,6 @@ sourceSets {
 
 minecraft {
 	mappings channel: "snapshot", version: "20180808-1.12"
-	accessTransformer = file("src/main/resources/META-INF/mixinpatches-at.cfg")
 }
 
 dependencies {
@@ -65,9 +64,8 @@ dependencies {
 	// Grimoire
 	implementation files("deps/Grimoire-mc1.12.2-3.2.8.jar")
 	//ReCore and more
-//	implementation "net.remodded:recore:1.0.0"
-//	implementation "net.remodded:reisland:1.0.0"
-	implementation files("deps/ReIsland-1.0.0.jar", "deps/ReCore-1.0.0.jar")
+	implementation "net.remodded:recore:1.0.0"
+	implementation "net.remodded:reisland:1.0.0"
 	// BloodMagic
 	implementation fg.deobf("curse.maven:bloodmagic-224791:2822288")
 	// Botania
@@ -76,6 +74,8 @@ dependencies {
 	implementation fg.deobf("curse.maven:mekanism-268560:2835175")
 	// Avaritia
 	implementation fg.deobf("curse.maven:avaritia-261348:3143349")
+	// AE2 Extended Life
+	implementation "curse.maven:ae2extendedlife-570458:4013344"
 }
 
 repositories {
@@ -85,15 +85,15 @@ repositories {
 	maven { url = "https://www.cursemaven.com" }
 	maven { url = "https://repo.maven.apache.org/maven2" }
 	maven { url = "https://dvs1.progwml6.com/files/maven" }
-//	repositories {
-//		maven {
-//			url "https://maven.pkg.jetbrains.space/remodded/p/recore/recore"
-//			credentials {
-//				username = spaceUsername
-//				password = spacePassword
-//			}
-//		}
-//	}
+	repositories {
+		maven {
+			url "https://maven.pkg.jetbrains.space/remodded/p/recore/recore"
+			credentials {
+				username = spaceUsername
+				password = spacePassword
+			}
+		}
+	}
 }
 
 compileKotlin {

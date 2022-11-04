@@ -20,8 +20,4 @@ class Core {
         lateinit var worldDataInstance: BMWorldSavedData
         lateinit var networkData: RMap<UUID, String>
     }
-
-    @Mod.EventHandler
-    fun onPreInit(event: FMLPreInitializationEvent) {
-    }
 }

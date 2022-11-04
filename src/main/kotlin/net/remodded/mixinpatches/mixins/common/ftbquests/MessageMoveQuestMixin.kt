@@ -1,4 +1,4 @@
-package net.remodded.mixinpatches.mixins.common
+package net.remodded.mixinpatches.mixins.common.ftbquests
 
 import com.feed_the_beast.ftblib.lib.net.MessageToServer
 import com.feed_the_beast.ftbquests.FTBQuests

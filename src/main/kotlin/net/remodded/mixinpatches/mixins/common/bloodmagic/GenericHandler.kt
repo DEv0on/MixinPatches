@@ -1,6 +1,6 @@
 @file:Mixin(GenericHandler::class)
 
-package net.remodded.mixinpatches.mixins.common
+package net.remodded.mixinpatches.mixins.common.bloodmagic
 
 import WayofTime.bloodmagic.util.handler.event.GenericHandler
 import net.minecraftforge.event.world.WorldEvent

@@ -1,4 +1,4 @@
-package net.remodded.mixinpatches.mixins.common
+package net.remodded.mixinpatches.mixins.common.bloodmagic
 
 import WayofTime.bloodmagic.altar.BloodAltar
 import net.minecraftforge.common.MinecraftForge

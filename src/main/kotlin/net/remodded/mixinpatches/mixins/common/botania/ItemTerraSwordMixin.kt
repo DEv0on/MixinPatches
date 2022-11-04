@@ -1,4 +1,4 @@
-package net.remodded.mixinpatches.mixins.common
+package net.remodded.mixinpatches.mixins.common.botania
 
 import net.minecraft.entity.player.EntityPlayer
 import net.remodded.reisland.listeners.IslandProtection

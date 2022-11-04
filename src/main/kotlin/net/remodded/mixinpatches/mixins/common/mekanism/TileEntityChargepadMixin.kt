@@ -1,4 +1,4 @@
-package net.remodded.mixinpatches.mixins.common
+package net.remodded.mixinpatches.mixins.common.mekanism
 
 import mekanism.common.tile.TileEntityChargepad
 import net.minecraft.entity.EntityLivingBase
@@ -19,9 +19,8 @@ class TileEntityChargepadMixin {
     }
 
     private fun isPlayerAuthorized(ent: EntityLivingBase): Boolean {
-        if (ent !is EntityPlayer) return false
-        if (IslandProtection.canPlayerInteract(ent as Player))
-            return true
-        return false
+        if (ent !is EntityPlayer)
+            return false
+        return IslandProtection.canPlayerInteract(ent as Player)
     }
 }
