@@ -84,14 +84,14 @@ class SoulNetworkMixin {
 @Overwrite
 fun newEmpty(uuid: UUID): SoulNetwork {
     val network: SoulNetwork = Class.forName("WayofTime.bloodmagic.core.data.SoulNetwork").newInstance() as SoulNetwork
-    (network as SoulNetworkMixin).playerId
+    (network as SoulNetworkAccessor).setPlayerId(uuid)
     network.parent = Core.worldDataInstance
     if (!Core.networkData.containsKey(uuid)) Core.networkData[uuid] = "0|0"
     return network
 }
 
 @Inject(method = ["fromNBT"], at = [At("HEAD")], cancellable = true)
-fun fromNBT(tagCompound: NBTTagCompound, callbackInfoReturnable: CallbackInfoReturnable<SoulNetwork>) {
+private fun fromNBT(tagCompound: NBTTagCompound, callbackInfoReturnable: CallbackInfoReturnable<SoulNetwork>) {
     callbackInfoReturnable.returnValue = null
     callbackInfoReturnable.cancel()
 }

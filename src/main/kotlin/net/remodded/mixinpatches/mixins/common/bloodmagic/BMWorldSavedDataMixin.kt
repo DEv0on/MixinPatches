@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.Redirect
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
 import java.util.*
 
 @Suppress("CAST_NEVER_SUCCEEDS")
@@ -27,8 +28,9 @@ class BMWorldSavedDataMixin {
         ci.cancel()
     }
 
-    @Overwrite
-    fun writeToNBT(tagCompound: NBTTagCompound): NBTTagCompound {
-        return tagCompound
+    @Inject(method = ["func_189551_b"], at = [At("HEAD")], cancellable = true)
+    fun writeToNBT(tagCompound: NBTTagCompound, callbackInfoReturnable: CallbackInfoReturnable<NBTTagCompound>) {
+        callbackInfoReturnable.returnValue = tagCompound
+        callbackInfoReturnable.cancel()
     }
 }

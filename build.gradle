@@ -51,6 +51,9 @@ dependencies {
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32"
 	// MongoDB
 	implementation 'org.litote.kmongo:kmongo-coroutine:4.2.8'
+	// S3
+	api(platform("com.amazonaws:aws-java-sdk-bom:1.12.51"))
+	api("com.amazonaws:aws-java-sdk-s3")
 	// Redis client
 	implementation "org.redisson:redisson:3.16.0"
 	// Sponge
@@ -59,13 +62,16 @@ dependencies {
 	implementation "org.spongepowered:mixin:0.8"
 	annotationProcessor "org.spongepowered:mixin:0.8:processor"
 	// FTB
-	implementation fg.deobf("com.feed_the_beast.mods:FTBLib:5.4.7.2")
-	implementation fg.deobf("com.feed_the_beast.mods:FTBQuests:1202.9.0.15")
+//	implementation fg.deobf("com.feed_the_beast.mods:FTBLib:5.4.7.2")
+//	implementation fg.deobf("com.feed_the_beast.mods:FTBQuests:1202.9.0.15")
+	implementation fg.deobf("curse.maven:FTBLibrary-237167:2985811")
+	implementation fg.deobf("curse.maven:FTBQuests-289412:3156637")
 	// Grimoire
 	implementation files("deps/Grimoire-mc1.12.2-3.2.8.jar")
 	//ReCore and more
-	implementation "net.remodded:recore:1.0.0"
-	implementation "net.remodded:reisland:1.0.0"
+//	implementation "net.remodded:recore:1.0.0"
+//	implementation "net.remodded:reisland:1.0.0"
+	implementation files("deps/ReIsland-1.0.0.jar", "deps/ReCore-1.0.0.jar")
 	// BloodMagic
 	implementation fg.deobf("curse.maven:bloodmagic-224791:2822288")
 	// Botania
@@ -85,15 +91,15 @@ repositories {
 	maven { url = "https://www.cursemaven.com" }
 	maven { url = "https://repo.maven.apache.org/maven2" }
 	maven { url = "https://dvs1.progwml6.com/files/maven" }
-	repositories {
-		maven {
-			url "https://maven.pkg.jetbrains.space/remodded/p/recore/recore"
-			credentials {
-				username = spaceUsername
-				password = spacePassword
-			}
-		}
-	}
+//	repositories {
+//		maven {
+//			url "https://maven.pkg.jetbrains.space/remodded/p/recore/recore"
+//			credentials {
+//				username = spaceUsername
+//				password = spacePassword
+//			}
+//		}
+//	}
 }
 
 compileKotlin {

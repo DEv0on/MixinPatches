@@ -9,34 +9,19 @@ import net.minecraftforge.fml.common.Loader
 @Grimmix(id = "mpgrimmix", name = "MixinPatches Grimmix")
 class MPGrimmix : GrimmixController() {
     override fun buildMixinConfigs(event: IConfigBuildingEvent) {
-        val builder = event.createBuilder("mixinpatches/mixins.mixinpatches.json")
+        event.createBuilder("mixinpatches/mixins.mixinpatches.json")
             .mixinPackage("net.remodded.mixinpatches.mixins")
+            .commonMixins("common.avaritia.*")
+            .commonMixins("common.ae2.*")
+            .commonMixins("common.bloodmagic.*")
+            .commonMixins("common.botania.*")
+            .commonMixins("common.ftblibrary.*")
+            .commonMixins("common.ftbquests.*")
+            .commonMixins("common.mekanism.*")
             .refmap("@MIXIN_REFMAP@")
             .verbose(true)
             .required(true)
             .configurationType(ConfigurationType.MOD)
-
-        if (Loader.isModLoaded("Avaritia"))
-            builder.commonMixins("common.avaritia.*")
-
-        if (Loader.isModLoaded("appliedenergistics2"))
-            builder.commonMixins("common.ae2.*")
-
-        if (Loader.isModLoaded("bloodmagic"))
-            builder.commonMixins("common.bloodmagic.*")
-
-        if (Loader.isModLoaded("botania"))
-            builder.commonMixins("common.botania.*")
-
-        if (Loader.isModLoaded("ftblib"))
-            builder.commonMixins("common.ftblibrary.*")
-
-        if (Loader.isModLoaded("ftbquests"))
-            builder.commonMixins("common.ftbquests.*")
-
-        if (Loader.isModLoaded("mekanism"))
-            builder.commonMixins("common.mekanism.*")
-
-        builder.build()
+            .build()
     }
 }
