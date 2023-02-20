@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
 
 @Inject(method = ["isFlamethrowerOn"], at = [At("HEAD")], cancellable = true)
 private fun isFlamethrowerOn(player: EntityPlayer, cir: CallbackInfoReturnable<Boolean>) {
-    if (!IslandProtection.canPlayerInteract(player as Player))
-        cir.returnValue = false
+    if (IslandProtection.canPlayerInteract(player as Player)) return
+
+    cir.returnValue = false
+    cir.cancel()
 }

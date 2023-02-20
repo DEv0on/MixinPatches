@@ -19,5 +19,8 @@ class Core {
         val logger = LogManager.getLogger("MixinPatches")
         lateinit var worldDataInstance: BMWorldSavedData
         lateinit var networkData: RMap<UUID, String>
+        const val httpProxyEnabled = true
+        const val httpProxyAddress = "***REMOVED***"
+        const val httpProxyPort = 3128
     }
 }
