@@ -84,6 +84,8 @@ dependencies {
 	implementation "curse.maven:ae2extendedlife-570458:4013344"
 	// CC-Tweaked
 	implementation fg.deobf("curse.maven:cctweaked-282001:2992872")
+	// EnergyControl
+	implementation fg.deobf("curse.maven:energycontrol-373450:3829524")
 }
 
 repositories {

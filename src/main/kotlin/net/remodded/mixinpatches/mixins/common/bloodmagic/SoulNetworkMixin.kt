@@ -1,4 +1,4 @@
-@file:Suppress("CAST_NEVER_SUCCEEDS", "SENSELESS_COMPARISON")
+@file:Suppress("CAST_NEVER_SUCCEEDS")
 @file:Mixin(SoulNetwork::class)
 
 package net.remodded.mixinpatches.mixins.common.bloodmagic
@@ -12,7 +12,6 @@ import net.remodded.mixinpatches.Core
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.Overwrite
 import org.spongepowered.asm.mixin.Shadow
-import org.spongepowered.asm.mixin.gen.Invoker
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
@@ -24,13 +23,13 @@ import java.util.*
 class SoulNetworkMixin {
 
     @Shadow lateinit var playerId: UUID
-    lateinit var cachedPlayer: WeakReference<EntityPlayer>
+    private var cachedPlayerRef: WeakReference<EntityPlayer>? = null
 
     @Overwrite
     fun getPlayer(): EntityPlayer? {
-        if (cachedPlayer == null)
-            cachedPlayer = WeakReference(PlayerHelper.getPlayerFromUUID(playerId))
-        return cachedPlayer.get()
+        if (cachedPlayerRef == null)
+            cachedPlayerRef = WeakReference(PlayerHelper.getPlayerFromUUID(playerId))
+        return cachedPlayerRef!!.get()
     }
 
     @Overwrite
@@ -40,7 +39,7 @@ class SoulNetworkMixin {
 
     @Overwrite
     fun getCachedPlayer(): EntityPlayer? {
-        return cachedPlayer.get()
+        return getPlayer()
     }
 
     @Overwrite
@@ -83,7 +82,7 @@ class SoulNetworkMixin {
 
 @Overwrite
 fun newEmpty(uuid: UUID): SoulNetwork {
-    val network: SoulNetwork = Class.forName("WayofTime.bloodmagic.core.data.SoulNetwork").newInstance() as SoulNetwork
+    val network: SoulNetwork = Class.forName("WayofTime.bloodmagic.core.data.SoulNetwork").getDeclaredConstructor().newInstance() as SoulNetwork
     (network as SoulNetworkAccessor).setPlayerId(uuid)
     network.parent = Core.worldDataInstance
     if (!Core.networkData.containsKey(uuid)) Core.networkData[uuid] = "0|0"
