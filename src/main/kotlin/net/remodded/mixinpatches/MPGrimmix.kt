@@ -4,7 +4,6 @@ import io.github.crucible.grimoire.common.api.grimmix.Grimmix
 import io.github.crucible.grimoire.common.api.grimmix.GrimmixController
 import io.github.crucible.grimoire.common.api.grimmix.lifecycle.IConfigBuildingEvent
 import io.github.crucible.grimoire.common.api.mixin.ConfigurationType
-import net.minecraftforge.fml.common.Loader
 
 @Grimmix(id = "mpgrimmix", name = "MixinPatches Grimmix")
 class MPGrimmix : GrimmixController() {

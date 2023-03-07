@@ -6,8 +6,7 @@ import mekanism.common.network.PacketRobit.RobitMessage
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext
-import net.remodded.reisland.listeners.IslandProtection
-import org.spongepowered.api.entity.living.player.Player
+import net.remodded.mixinpatches.utils.canPlayerInteract
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
@@ -18,7 +17,9 @@ class PacketRobitMixin {
     @Inject(method = ["onMessage"], at = [At("HEAD")], cancellable = true)
     fun onMessage(message: RobitMessage, context: MessageContext, cir: CallbackInfoReturnable<IMessage>) {
         val player: EntityPlayer = PacketHandler.getPlayer(context)
-        if (!IslandProtection.canPlayerInteract(player as Player))
-            cir.returnValue = null
+        if (player.canPlayerInteract()) return
+
+        cir.returnValue = null
+        cir.cancel()
     }
 }

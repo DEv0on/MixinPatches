@@ -1,8 +1,7 @@
 package net.remodded.mixinpatches.mixins.common.botania
 
 import net.minecraft.entity.player.EntityPlayer
-import net.remodded.reisland.listeners.IslandProtection
-import org.spongepowered.api.entity.living.player.Player
+import net.remodded.mixinpatches.utils.canPlayerInteract
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
@@ -14,7 +13,7 @@ class ItemTerraSwordMixin {
 
     @Inject(method = ["trySpawnBurst"], at = [At("HEAD")], cancellable = true)
     fun trySpawnBurst(player: EntityPlayer, cl: CallbackInfo) {
-        if (!IslandProtection.canPlayerInteract(player as Player))
+        if (!player.canPlayerInteract())
             cl.cancel()
     }
 }

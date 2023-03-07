@@ -28,13 +28,10 @@ fun removeBlockWithDrops(
     if (world.isBlockLoaded(pos)) {
         val state = world.getBlockState(pos)
         val block = state.block
+
+        if (block.getHarvestLevel(state) < 0) return
         if (!world.isRemote) {
-            if ((target == null || target === state.block) && !block.isAir(
-                    state,
-                    world,
-                    pos
-                ) && block.blockState.block != Blocks.BEDROCK
-            ) {
+            if ((target == null || target === state.block) && !block.isAir(state, world, pos)) {
                 val material = state.material
                 if (block === Blocks.GRASS && stack.item === ModItems.infinity_axe) {
                     world.setBlockState(pos, Blocks.DIRT.defaultState)

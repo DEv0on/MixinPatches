@@ -32,7 +32,7 @@ class Core {
 
         var redisClient: RedissonClient
 
-        fun establishRedisConnection(): RedissonClient {
+        private fun establishRedisConnection(): RedissonClient {
             val config = Config()
             config.codec = StringCodec()
             val serverConfig = config.useSingleServer()
