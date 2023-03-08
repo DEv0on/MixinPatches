@@ -86,6 +86,8 @@ dependencies {
 	implementation fg.deobf("curse.maven:cctweaked-282001:2992872")
 	// EnergyControl
 	implementation fg.deobf("curse.maven:energycontrol-373450:3829524")
+	// Forestry
+	implementation fg.deobf("curse.maven:forestry-59751:2918418")
 }
 
 repositories {

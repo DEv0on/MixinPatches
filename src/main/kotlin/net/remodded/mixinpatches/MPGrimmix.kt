@@ -16,6 +16,7 @@ class MPGrimmix : GrimmixController() {
                 .commonMixins("common.botania.*")
                 .commonMixins("common.cctweaked.*")
                 .commonMixins("common.energycontrol.*")
+                .commonMixins("common.forestry.*")
 //              .commonMixins("common.ftblibrary.*")
                 .commonMixins("common.ftbquests.*")
                 .commonMixins("common.mekanism.*")
