@@ -8,7 +8,7 @@ import io.github.crucible.grimoire.common.api.mixin.ConfigurationType
 @Grimmix(id = "mpgrimmix", name = "MixinPatches Grimmix")
 class MPGrimmix : GrimmixController() {
     override fun buildMixinConfigs(event: IConfigBuildingEvent) {
-        event.createBuilder("mixinpatches/mixins.mixinpatches.json")
+            event.createBuilder("mixinpatches/mixins.mixinpatches.json")
                 .mixinPackage("net.remodded.mixinpatches.mixins")
                 .commonMixins("common.ae2.*")
                 .commonMixins("common.avaritia.*")
@@ -25,13 +25,14 @@ class MPGrimmix : GrimmixController() {
                 .required(true)
                 .configurationType(ConfigurationType.MOD)
                 .build()
-        event.createBuilder("mixinpatches/coremod.mixinpatches.json")
-                .mixinPackage("net.remodded.mixinpatches.core.mixins")
-                .commonMixins("common.sponge.*")
-                .refmap("@MIXIN_REFMAP@")
-                .verbose(true)
-                .required(true)
-                .configurationType(ConfigurationType.CORE)
-                .build()
+            event.createBuilder("mixinpatches/coremod.mixinpatches.json")
+                    .mixinPackage("net.remodded.mixinpatches.core.mixins")
+                    .commonMixins("common.minecraft.*")
+                    .commonMixins("common.sponge.*")
+                    .refmap("@MIXIN_REFMAP@")
+                    .verbose(true)
+                    .required(true)
+                    .configurationType(ConfigurationType.CORE)
+                    .build()
     }
 }
