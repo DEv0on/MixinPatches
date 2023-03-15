@@ -81,7 +81,7 @@ dependencies {
 	// Avaritia
 	implementation fg.deobf("curse.maven:avaritia-261348:3143349")
 	// AE2 Extended Life
-	implementation "curse.maven:ae2extendedlife-570458:4013344"
+	implementation fg.deobf("curse.maven:ae2extendedlife-570458:4013344")
 	// CC-Tweaked
 	implementation fg.deobf("curse.maven:cctweaked-282001:2992872")
 	// EnergyControl
