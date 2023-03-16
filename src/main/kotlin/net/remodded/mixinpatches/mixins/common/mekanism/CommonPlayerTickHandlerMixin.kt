@@ -15,5 +15,4 @@ private fun isFlamethrowerOn(player: EntityPlayer, cir: CallbackInfoReturnable<B
     if (player.canPlayerInteract()) return
 
     cir.returnValue = false
-    cir.cancel()
 }

@@ -31,6 +31,5 @@ class BMWorldSavedDataMixin {
     @Inject(method = ["func_189551_b"], at = [At("HEAD")], cancellable = true)
     fun writeToNBT(tagCompound: NBTTagCompound, callbackInfoReturnable: CallbackInfoReturnable<NBTTagCompound>) {
         callbackInfoReturnable.returnValue = tagCompound
-        callbackInfoReturnable.cancel()
     }
 }

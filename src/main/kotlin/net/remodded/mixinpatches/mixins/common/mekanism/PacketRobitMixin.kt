@@ -20,6 +20,5 @@ class PacketRobitMixin {
         if (player.canPlayerInteract()) return
 
         cir.returnValue = null
-        cir.cancel()
     }
 }

@@ -71,7 +71,6 @@ class SoulNetworkMixin {
     @Inject(method = ["serializeNBT"], at = [At("HEAD")], cancellable = true)
     fun serializeNBT(callbackInfoReturnable: CallbackInfoReturnable<NBTTagCompound>) {
         callbackInfoReturnable.returnValue = null
-        callbackInfoReturnable.cancel()
     }
 
     @Inject(method = ["deserializeNBT"], at = [At("HEAD")], cancellable = true)
@@ -92,5 +91,4 @@ fun newEmpty(uuid: UUID): SoulNetwork {
 @Inject(method = ["fromNBT"], at = [At("HEAD")], cancellable = true)
 private fun fromNBT(tagCompound: NBTTagCompound, callbackInfoReturnable: CallbackInfoReturnable<SoulNetwork>) {
     callbackInfoReturnable.returnValue = null
-    callbackInfoReturnable.cancel()
 }

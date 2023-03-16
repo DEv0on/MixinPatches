@@ -33,5 +33,5 @@ private fun staticInit(ci: CallbackInfo) {
 
 @Overwrite
 fun getMap(): Map<UUID, String> {
-    return map
+    return (map as Map<String, String>).mapKeys { (k, v) -> UUID.fromString(k) }
 }
