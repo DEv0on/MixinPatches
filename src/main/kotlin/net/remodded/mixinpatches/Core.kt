@@ -22,13 +22,13 @@ class Core {
         lateinit var networkData: RMap<UUID, String>
 
         const val httpProxyEnabled = true
-        const val httpProxyAddress = "***REMOVED***"
+        const val httpProxyAddress = ""
         const val httpProxyPort = 3128
 
         private const val redisHostname = "redis"
         private const val redisPort = "6379"
         private val redisUsername: String? = null
-        private val redisPassword: String = "***REMOVED***"
+        private val redisPassword: String = ""
 
         var redisClient: RedissonClient
 
